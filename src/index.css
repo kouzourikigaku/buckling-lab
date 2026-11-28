@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+@theme {
+  /* 明るい背景の配色(2026-11-15 に黒基調から変更)。studio-* は名前はそのままで、背景〜枠線の明るい色 */
+  --color-studio-950: #f3f6fa;
+  --color-studio-900: #ffffff;
+  --color-studio-800: #eef2f8;
+  --color-studio-700: #e3e9f2;
+  --color-studio-600: #cbd5e3;
+  --color-ink: #1b2740;
+  --color-ink-dim: #55637b;
+  --color-comp: #0b6fc2;
+  --color-tens: #c2410c;
+  --color-yield: #e11d48;
+  --color-gold: #6d28d9; /* 目印・注目の色(名前は gold のまま、紫) */
+  --font-sans: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+}
+
+html,
+body {
+  background: var(--color-studio-950);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  min-height: 100dvh;
+  background: var(--color-studio-950);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  touch-action: pan-y;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #c3cedd;
+}
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #c3cedd;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--thumb, var(--color-ink));
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--thumb, var(--color-ink));
+}
+input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--thumb, var(--color-ink));
+  border: 3px solid #ffffff;
+}
+
+@keyframes pulse-yield {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.flash-yield {
+  animation: pulse-yield 0.9s ease-in-out infinite;
+}
+
+@keyframes telop-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.telop {
+  animation: telop-in 0.5s ease-out;
+}
+
+/* 場面の動きを見終えたら「次へ」を軽く光らせる */
+@keyframes next-ready {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(11, 111, 194, 0.55); }
+  50% { box-shadow: 0 0 0 7px rgba(11, 111, 194, 0); }
+}
+[data-next][data-done='1'] {
+  animation: next-ready 1.6s ease-in-out infinite;
+}
